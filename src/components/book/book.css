@@ -1,0 +1,17 @@
+.book-container{
+    width: 250px;
+    float: left;
+} 
+.book-container .book-btn{   
+    justify-content: flex-end;
+    display: flex;
+    padding-top: 190px;
+    padding-right: 5px;
+}
+#book-img{
+    width: 172px;
+    height: 250px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
