@@ -47,6 +47,7 @@ class Book extends Component {
     }
     render() {
         const backImg = require('../../images/' + this.state.picSource);
+        console.log(this.state);
         return (
             <div className="book-container">
                 <div style={{ backgroundImage: `url(` + backImg + `)` }} id="book-img">

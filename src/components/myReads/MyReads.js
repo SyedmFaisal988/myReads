@@ -7,11 +7,10 @@ class MyReads extends Component {
         myreads: [],
         readLater: [],
     }
+    getValue
     updateState = ()=>{
-        var books = JSON.parse(localStorage.getItem('books'));
+        const {books, myreads, readLater} = this.getValueFromLocal();
         if (books !== null) {
-            var myreads = books.filter(book => book.option === "myRead");
-            var readLater = books.filter(book => book.option === "readLater");            
             this.setState({
                 books,
                 myreads,
@@ -20,7 +19,7 @@ class MyReads extends Component {
         }else{
             this.setState({
                 books: [],
-                MyReads: [],
+                myreads: [],
                 readLater: [],
             })
         }
@@ -29,8 +28,18 @@ class MyReads extends Component {
     componentDidMount() {
         this.updateState();
     }
+    getValueFromLocal = ()=>{
+        var books = JSON.parse(localStorage.getItem('books'));
+        var myreads = [];
+        var readLater = [];
+        if (books !== null) {
+            myreads = books.filter(book => book.option === "myRead");
+            readLater = books.filter(book => book.option === "readLater");            
+        }
+        return {myreads, readLater, books}
+    }
     render() {
-        console.log(this.state+ " myread")
+        const {myreads, readLater} = this.getValueFromLocal();
         return (
             <div >
                 <h4>
@@ -39,7 +48,7 @@ class MyReads extends Component {
                 <hr/>
                 <div style={{ display: 'flex', justifyContent: 'center', }} className="center-align">
                 {
-                    this.state.myreads!==null? this.state.myreads.map((book, index)=><Book key={index}
+                    myreads!==null? myreads.map((book, index)=><Book key={index}
                     name={book.name} 
                     picSource={book.picSource} 
                     val={1}
@@ -53,7 +62,7 @@ class MyReads extends Component {
                 <hr/>
                 <div style={{ display: 'flex', justifyContent: 'center', }} className="center-align">
                 {
-                    this.state.readLater!==null? this.state.readLater.map((book, index)=><Book key={index}
+                    readLater!==null? readLater.map((book, index)=><Book key={index}
                     name={book.name} 
                     picSource={book.picSource} 
                     val={1}
