@@ -73,36 +73,33 @@ class Book extends Component {
 
     //WARNING! To be deprecated in React v17. Use componentDidMount instead.
     componentWillUnmount() {
-        if(this.state.loaded){
-            document.removeEventListener(".dropdown-trigger"+this.props.index+this.state.num, this);
-            document.addEventListener('DOMContentLoaded', function() {
-            //console.log(ele)
-            var elems = document.querySelectorAll('.dropdown-trigger'+this.props.index+this.state.num);
-            var instances = M.Dropdown.getInstance(elems);
-            instances.destroy();
-        })
-    }
-        console.log('hello');
-        this.initDrop();           
+            var val = this.props.val;
+            document.removeEventListener("DOMContentLoaded", this.vla(this.props.val));
+        //     document.addEventListener('DOMContentLoaded', function() {     
+        //        var elems = document.querySelectorAll('.dropdown-trigger'+val);
+        //         var instances = M.Dropdown.getInstance(elems);
+        //     instances.destroy();
+        // })
+    
+        //console.log('hello');
+     //   this.initDrop();           
     }
               
-    initDrop=()=>{
-        var val = this.props.index;
-        var num = this.state.num;
-        if(this.state.loaded){
-            document.addEventListener('DOMContentLoaded', function() {
-                var elems = document.querySelectorAll('.dropdown-trigger'+val+num);
-                var instances = M.Dropdown.init(elems);
-              });   
-              console.log('hry elelle')
-        }
-        this.state.num = this.state.num+1;
-        console.log("drop ",this.props.index ,this.state.num)
+    // initDrop=()=>{
+        
+    //     if(this.state.loaded){
+            
+    //           console.log('hry elelle')
+    //     }
+    // }
+    vla = (val)=>{
+            var elems = document.querySelectorAll('.dropdown-trigger'+val);
+            var instances = M.Dropdown.init(elems);   
     }
     componentDidMount(){
-          this.setState({
-              loaded: true
-          });
+         var val = this.props.val;
+        // var num = this.state.num;
+        document.addEventListener('DOMContentLoaded', this.vla(this.props.val))
     }
     render() {
         const backImg = require('../../images/' + this.state.picSource);
@@ -110,15 +107,14 @@ class Book extends Component {
             <div className="book-container">
                 <div style={{ backgroundImage: `url(` + backImg + `)` }} id="book-img">
                     <div className="book-btn">
-                        <a className={"dropdown-trigger"+this.props.index+this.state.num +" btn-floating btn-large waves-effect waves-light teal lighten-2"} data-target={'dropdown'+this.props.val+this.props.index}  > <i className="material-icons">add</i></a>
-                        <ul id={'dropdown'+this.props.val+this.props.index} className='dropdown-content'>
+                        <a className={"dropdown-trigger"+this.props.val +" btn-floating btn-large waves-effect waves-light teal lighten-2"} data-target={'dropdown'+this.props.index}  > <i className="material-icons">add</i></a>
+                        <ul id={'dropdown'+this.props.index} className='dropdown-content'>
                             <li onClick={()=>this.addHandler(1)}><a href="#">My Read</a></li>
                             <li onClick={()=>this.addHandler(2)}><a href="#">Read Later</a></li>
                             <li onClick={()=>this.addHandler(3)}><a href="#">None</a></li>
                         </ul>
                     </div>
-                </div>
-                {this.initDrop()}
+                </div>                
                 {this.state.name}
             </div>
         );

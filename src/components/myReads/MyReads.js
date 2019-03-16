@@ -23,11 +23,11 @@ class MyReads extends Component {
                 readLater: [],
             })
         }
-        this.forceUpdate();
+        //this.forceUpdate();
     }
-    componentDidMount() {
-        this.updateState();
-    }
+    // componentDidMount() {
+    //     this.updateState();
+    // }
     getValueFromLocal = ()=>{
         var books = JSON.parse(localStorage.getItem('books'));
         var myreads = [];
@@ -40,6 +40,7 @@ class MyReads extends Component {
     }
     render() {
         const {myreads, readLater} = this.getValueFromLocal();
+        console.log("myreads")
         return (
             <div >
                 <h4>

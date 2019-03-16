@@ -55,6 +55,7 @@ class Book_Store extends Component {
             })
     }
     render() {
+        console.log('array '+this.state.searchRes)
         return (
             <div className="book-store-container">
                 <div className="input-field col s6">
