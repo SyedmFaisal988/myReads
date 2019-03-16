@@ -48,11 +48,48 @@ class Book_Store extends Component {
             })
         }
     }
+
+    //WARNING! To be deprecated in React v17. Use componentDidUpdate instead.
+    componentWillUpdate(nextProps, nextState) {
+        
+    }
+
+    //WARNING! To be deprecated in React v17. Use componentDidMount instead.
+    componentWillMount() {
+        const api = 'https://www.googleapis.com/books/v1/volumes?q=react';
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
+                'Access-Control-allow-Methods': 'POST, GET'
+            }
+        })
+        .then(respond=>respond.json())
+        .then(json=>{
+            let RawBooks = JSON.parse(JSON.stringify(json))
+            console.log(RawBooks)
+            let books = RawBooks.items.map(bookDetails=>{
+                return{
+                name: bookDetails.volumeInfo.title,
+                picSource: bookDetails.volumeInfo.imageLinks.thumbnail
+                }
+            })
+            this.setState({
+                books: books
+            })
+
+            console.log('books ', books)
+        })
+        .catch()
+    }
+
     componentDidMount() {
         const books = this.state.books;
             this.setState({
                 searchRes: books,
             })
+        
     }
     render() {
         console.log('array '+this.state.searchRes)
@@ -64,9 +101,8 @@ class Book_Store extends Component {
                     <label htmlFor="icon_prefix">Search</label>
                 </div>
                 <div className="book-store-wrapper">
-                <p>{this.state.searchRes[0].name}</p>
                     {
-                        this.state.searchRes.map((book)=>{
+                        this.state.books.map((book)=>{
                             var index = Math.trunc(Math.random()*1000); 
                             return <Book key={index}
                                         name={book.name} 

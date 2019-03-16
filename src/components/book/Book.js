@@ -102,7 +102,7 @@ class Book extends Component {
         document.addEventListener('DOMContentLoaded', this.vla(this.props.val))
     }
     render() {
-        const backImg = require('../../images/' + this.state.picSource);
+        const backImg =  this.state.picSource;        
         return (
             <div className="book-container">
                 <div style={{ backgroundImage: `url(` + backImg + `)` }} id="book-img">
