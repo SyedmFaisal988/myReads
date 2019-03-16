@@ -48,7 +48,7 @@ class MyReads extends Component {
                 <hr/>
                 <div style={{ display: 'flex', justifyContent: 'center', }} className="center-align">
                 {
-                    myreads!==null? myreads.map((book)=>{
+                    (myreads!==null)? myreads.map((book)=>{
                         var index = Math.trunc(Math.random()*1000)
                         return <Book key={index}
                             name={book.name} 
@@ -65,7 +65,7 @@ class MyReads extends Component {
                 <hr/>
                 <div style={{ display: 'flex', justifyContent: 'center', }} className="center-align">
                 {
-                    readLater!==null? readLater.map((book, index)=><Book key={index}
+                    (readLater!==null )? readLater.map((book, index)=><Book key={index}
                     name={book.name} 
                     picSource={book.picSource} 
                     val={1}

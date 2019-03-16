@@ -9,6 +9,7 @@ class Book extends Component {
         option: '',
         loaded: false,
         elems: "",
+        num: 0,
     }
     addHandler = (option) => {
         var books = JSON.parse(localStorage.getItem("books"));
@@ -16,14 +17,22 @@ class Book extends Component {
         if(books === null)
             books = [];
         //var i = 0;
-        for(let i=0; i< books.length; i++){            
-            if(books[i].name === this.state.name){                
-                alert("This book is already in your: ");
-                return;
-            }        
-        }
         switch(option){
             case 1:
+            for(let i=0; i< books.length; i++){            
+                if(books[i].name === this.state.name){                
+                    if(books[i].option!=="myRead"){
+                        books[i].option= "myRead";
+                        localStorage.setItem("books",JSON.stringify(books));
+                        this.props.updateMyReads()
+                        return;
+                    }else{
+                        alert("This book is already in your: ");
+                        return;
+                    }
+                    return;
+                }        
+            }
                 temp.option = "myRead";
                 books.push(temp);
                 localStorage.setItem("books",JSON.stringify(books));
@@ -31,6 +40,20 @@ class Book extends Component {
                     this.props.updateMyReads();
             return;
             case 2:
+            for(let i=0; i< books.length; i++){            
+                if(books[i].name === this.state.name){                
+                    if(books[i].option!=="readLater"){
+                        books[i].option= "readLater";
+                        localStorage.setItem("books",JSON.stringify(books));
+                        this.props.updateMyReads()
+                        return;
+
+                    }else{
+                    alert("This book is already in your: "+books[i].option);
+                    return;
+                }
+                }
+            }
                 temp.option = "readLater";
                 books.push(temp);
                 localStorage.setItem("books",JSON.stringify(books));
@@ -51,10 +74,10 @@ class Book extends Component {
     //WARNING! To be deprecated in React v17. Use componentDidMount instead.
     componentWillUnmount() {
         if(this.state.loaded){
-        document.removeEventListener(".dropdown-trigger", this);
-        document.addEventListener('DOMContentLoaded', function() {
+            document.removeEventListener(".dropdown-trigger"+this.props.index+this.state.num, this);
+            document.addEventListener('DOMContentLoaded', function() {
             //console.log(ele)
-            var elems = document.querySelectorAll('.dropdown-trigger');
+            var elems = document.querySelectorAll('.dropdown-trigger'+this.props.index+this.state.num);
             var instances = M.Dropdown.getInstance(elems);
             instances.destroy();
         })
@@ -64,27 +87,22 @@ class Book extends Component {
     }
               
     initDrop=()=>{
+        var val = this.props.index;
+        var num = this.state.num;
         if(this.state.loaded){
             document.addEventListener('DOMContentLoaded', function() {
-                var elems = document.querySelectorAll('.dropdown-trigger');
+                var elems = document.querySelectorAll('.dropdown-trigger'+val+num);
                 var instances = M.Dropdown.init(elems);
               });   
               console.log('hry elelle')
         }
+        this.state.num = this.state.num+1;
+        console.log("drop ",this.props.index ,this.state.num)
     }
     componentDidMount(){
           this.setState({
               loaded: true
           });
-    }
-    dropHandler = ()=>{
-            document.addEventListener('DOMContentLoaded', function() {
-                var elem = document.querySelector('.dropdown-trigger');
-                var instance = M.Dropdown.getInstance(elem);
-                //console.log(instance);
-                instance.open();
-              });   
-              console.log("ehllo")
     }
     render() {
         const backImg = require('../../images/' + this.state.picSource);
@@ -92,7 +110,7 @@ class Book extends Component {
             <div className="book-container">
                 <div style={{ backgroundImage: `url(` + backImg + `)` }} id="book-img">
                     <div className="book-btn">
-                        <a className="dropdown-trigger btn-floating btn-large waves-effect waves-light teal lighten-2" data-target={'dropdown'+this.props.val+this.props.index} ><i className="material-icons">add</i></a>
+                        <a className={"dropdown-trigger"+this.props.index+this.state.num +" btn-floating btn-large waves-effect waves-light teal lighten-2"} data-target={'dropdown'+this.props.val+this.props.index}  > <i className="material-icons">add</i></a>
                         <ul id={'dropdown'+this.props.val+this.props.index} className='dropdown-content'>
                             <li onClick={()=>this.addHandler(1)}><a href="#">My Read</a></li>
                             <li onClick={()=>this.addHandler(2)}><a href="#">Read Later</a></li>
@@ -100,8 +118,7 @@ class Book extends Component {
                         </ul>
                     </div>
                 </div>
-                {this.initDrop()
-                }
+                {this.initDrop()}
                 {this.state.name}
             </div>
         );

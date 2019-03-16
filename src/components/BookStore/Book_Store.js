@@ -47,7 +47,6 @@ class Book_Store extends Component {
                 searchVal: e.target.value
             })
         }
-        //this.forceUpdate();   
     }
     componentDidMount() {
         const books = this.state.books;
