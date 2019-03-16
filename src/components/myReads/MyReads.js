@@ -48,12 +48,15 @@ class MyReads extends Component {
                 <hr/>
                 <div style={{ display: 'flex', justifyContent: 'center', }} className="center-align">
                 {
-                    myreads!==null? myreads.map((book, index)=><Book key={Math.random()*1000}
-                    name={book.name} 
-                    picSource={book.picSource} 
-                    val={1}
-                    index={index}
-                    updateMyReads={this.updateState}/>): <p>You are not Currently Reading any book</p>
+                    myreads!==null? myreads.map((book)=>{
+                        var index = Math.trunc(Math.random()*1000)
+                        return <Book key={index}
+                            name={book.name} 
+                            picSource={book.picSource} 
+                            val={1}
+                            index={index}
+                            updateMyReads={this.updateState}/>
+                }): <p>You are not Currently Reading any book</p>
                 }
                 </div>
                 <h4>

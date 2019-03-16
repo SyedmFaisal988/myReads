@@ -47,7 +47,7 @@ class Book_Store extends Component {
                 searchVal: e.target.value
             })
         }
-        this.forceUpdate();
+        //this.forceUpdate();   
     }
     componentDidMount() {
         const books = this.state.books;
@@ -56,7 +56,6 @@ class Book_Store extends Component {
             })
     }
     render() {
-        console.log(this.state.searchRes)
         return (
             <div className="book-store-container">
                 <div className="input-field col s6">
@@ -67,11 +66,14 @@ class Book_Store extends Component {
                 <div className="book-store-wrapper">
                 <p>{this.state.searchRes[0].name}</p>
                     {
-                        this.state.searchRes.map((book, index)=><Book key={Math.random()*1000}
-                        name={book.name} 
-                        picSource={book.picSource} 
-                        val={2} 
-                        index={index}/>)
+                        this.state.searchRes.map((book)=>{
+                            var index = Math.trunc(Math.random()*1000); 
+                            return <Book key={index}
+                                        name={book.name} 
+                                        picSource={book.picSource} 
+                                        val={2} 
+                                        index={index}    />
+                    })
                     }
                 </div>
             </div>            
