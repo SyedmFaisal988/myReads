@@ -73,7 +73,6 @@ class Book extends Component {
 
     //WARNING! To be deprecated in React v17. Use componentDidMount instead.
     componentWillUnmount() {
-            var val = this.props.val;
             document.removeEventListener("DOMContentLoaded", this.vla(this.props.val));
         //     document.addEventListener('DOMContentLoaded', function() {     
         //        var elems = document.querySelectorAll('.dropdown-trigger'+val);
@@ -97,7 +96,6 @@ class Book extends Component {
             var instances = M.Dropdown.init(elems);   
     }
     componentDidMount(){
-         var val = this.props.val;
         // var num = this.state.num;
         document.addEventListener('DOMContentLoaded', this.vla(this.props.val))
     }

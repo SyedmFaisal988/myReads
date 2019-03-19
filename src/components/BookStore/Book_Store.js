@@ -4,27 +4,7 @@ import './book-store.css'
 class Book_Store extends Component {
     state = {
         searchVal: '',
-        books: [{
-            name: 'Software Engineering for Science',
-            picSource: 'Software_Engineering_for_Science.jpg',
-            key: '1book',
-        },{
-            name: 'Introduction of Software',
-            picSource: 'book2.jpg',
-            key: '2book',
-        },{
-            name: 'Foundation of Soft Engineering',
-            picSource: 'Foundations_of_Software_Engineering.jpg',
-            key: '3book',
-        },{
-            name: 'SOFTWARE ENGINEERING ESSENTIALS',
-            picSource: 'book3.jpg',
-            key: '3book',
-        },{
-            name: ' Software Requirements',
-            picSource: 'book4.jpg',
-            key: '4book',
-        }],
+        books: [],
         searchRes: [{
             name: 'Software Engineering for Science',
             picSource: 'Software_Engineering_for_Science.jpg'
@@ -49,11 +29,6 @@ class Book_Store extends Component {
         }
     }
 
-    //WARNING! To be deprecated in React v17. Use componentDidUpdate instead.
-    componentWillUpdate(nextProps, nextState) {
-        
-    }
-
     //WARNING! To be deprecated in React v17. Use componentDidMount instead.
     componentWillMount() {
         const api = 'https://www.googleapis.com/books/v1/volumes?q=react';
@@ -76,7 +51,8 @@ class Book_Store extends Component {
                 }
             })
             this.setState({
-                books: books
+                books: books,
+                searchRes: books,
             })
 
             console.log('books ', books)
@@ -102,7 +78,7 @@ class Book_Store extends Component {
                 </div>
                 <div className="book-store-wrapper">
                     {
-                        this.state.books.map((book)=>{
+                        this.state.searchRes.map((book)=>{
                             var index = Math.trunc(Math.random()*1000); 
                             return <Book key={index}
                                         name={book.name} 

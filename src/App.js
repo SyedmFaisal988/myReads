@@ -16,15 +16,6 @@ class App extends Component {
   // }
 
   componentDidMount() {
-    // var force=()=>{
-    //   console.log('state changed ', this.state.status)
-    //   this.setState((prevState)=>({
-    //     status: !prevState.status,
-    //   }));
-    //   localStorage.setItem("status", this.state.status);
-    //   window.location.reload();
-    //   //this.forceUpdate();
-    // }
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('.tabs');
       var instance = M.Tabs.init(elems, {
@@ -45,8 +36,8 @@ class App extends Component {
   TabsRender = ()=>{
     return <div>
       <ul id="tabs-swipe-demo" className="tabs tabs-fixed-width ">
-          <li className="tab col s3"><a onClick={this.changeStatus} className={this.state.status?"active":""}  href="#test-swipe-1"><Link to="/">Library</Link>Library</a></li>
-          <li className="tab col s3"><a onClick={this.changeStatus} className={this.state.status?"":"active"} href="#test-swipe-2"><Link to="myreads">My Reads</Link></a></li>
+          <li className="tab col s3"><a onClick={this.changeStatus} className={this.state.status?"active":""}  href="#test-swipe-1"><Link to="/">Library</Link></a></li>
+          <li className="tab col s3"><a onClick={this.changeStatus} className={this.state.status?"":"active"} href="#test-swipe-2"><Link to="/myreads" >My Reads</Link></a></li>
         </ul>
     </div>
   }
